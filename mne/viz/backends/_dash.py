@@ -50,6 +50,7 @@ class _Renderer(_BaseRenderer):
             i=i,
             j=j,
             k=k,
+            opacity=opacity,
             showscale=True
         )
         self.data.append(mesh)
