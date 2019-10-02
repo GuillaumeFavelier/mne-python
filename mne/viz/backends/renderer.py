@@ -25,7 +25,9 @@ except NameError:
 logger.info('Using %s 3d backend.\n' % MNE_3D_BACKEND)
 
 _fromlist = ('_Renderer', '_Projection', '_close_all')
-_name_map = dict(mayavi='_pysurfer_mayavi', pyvista='_pyvista')
+_name_map = dict(mayavi='_pysurfer_mayavi',
+                 pyvista='_pyvista',
+                 dash='_dash')
 if MNE_3D_BACKEND in VALID_3D_BACKENDS:
     # This is (hopefully) the equivalent to:
     #    from ._whatever_name import ...
