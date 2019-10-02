@@ -57,7 +57,10 @@ class _Renderer(_BaseRenderer):
 
     def sphere(self, center, color, scale, opacity=1.0,
                resolution=8, backface_culling=False):
-        pass
+        import plotly.graph_objects as go
+        x, y, z = center.T
+        scatter = go.Scatter3d(x=x, y=y, z=z, mode='markers')
+        self.data.append(scatter)
 
     def tube(self, origin, destination, radius=1.0, color=(1.0, 1.0, 1.0),
              scalars=None, vmin=None, vmax=None, colormap='RdBu',
