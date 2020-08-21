@@ -331,6 +331,13 @@ class _Renderer(_BaseRenderer):
             self.fig.scene.renderer.remove_actor(surface.actor)
 
 
+def _test_render():
+    from mayavi import mlab
+    mlab.test_plot3d()
+    mlab.figure()
+    mlab.test_contour3d()
+
+
 def _mlab_figure(**kwargs):
     """Create a Mayavi figure using our defaults."""
     from .._3d import _get_3d_option

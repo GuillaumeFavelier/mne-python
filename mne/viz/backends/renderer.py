@@ -25,11 +25,28 @@ _backend_name_map = dict(
 backend = None
 
 
+def _try_import_backend(name):
+    try:
+        _reload_backend(name)
+    except ImportError:
+        return False
+    else:
+        return True
+
+
+def _try_render_backend():
+    try:
+        backend._test_render()
+    except Exception:
+        return False
+    else:
+        return True
+
+
 def _reload_backend(backend_name):
     global backend
     backend = importlib.import_module(name=_backend_name_map[backend_name],
                                       package='mne.viz.backends')
-    logger.info('Using %s 3d backend.\n' % backend_name)
 
 
 def _get_renderer(*args, **kwargs):
@@ -139,13 +156,11 @@ def _get_3d_backend():
         MNE_3D_BACKEND = get_config(key='MNE_3D_BACKEND', default=None)
         if MNE_3D_BACKEND is None:  # try them in order
             for name in VALID_3D_BACKENDS:
-                try:
-                    _reload_backend(name)
-                except ImportError:
-                    continue
-                else:
+                if _try_import_backend(name) and _try_render_backend():
                     MNE_3D_BACKEND = name
                     break
+                else:
+                    continue
             else:
                 raise RuntimeError('Could not load any valid 3D backend: %s'
                                    % (VALID_3D_BACKENDS))
@@ -154,6 +169,7 @@ def _get_3d_backend():
             _reload_backend(MNE_3D_BACKEND)
     else:
         _check_option('MNE_3D_BACKEND', MNE_3D_BACKEND, VALID_3D_BACKENDS)
+    logger.info('Using %s 3d backend.\n' % MNE_3D_BACKEND)
     return MNE_3D_BACKEND
 
 

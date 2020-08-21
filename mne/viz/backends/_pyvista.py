@@ -602,6 +602,13 @@ class _Renderer(_BaseRenderer):
         self.plotter.renderer.remove_actor(actor)
 
 
+def _test_render():
+    p = Plotter()
+    p.add_mesh(pyvista.Sphere())
+    p.show()
+    p.close()
+
+
 def _compute_normals(mesh):
     """Patch PyVista compute_normals."""
     if 'Normals' not in mesh.point_arrays:

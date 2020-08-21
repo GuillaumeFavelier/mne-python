@@ -162,4 +162,9 @@ class _NotebookInteractor(object):
             slider.continuous_update = value
 
 
+def _test_render():
+    from ._pyvista import _test_render
+    _test_render()
+
+
 _testing_context = nullcontext
